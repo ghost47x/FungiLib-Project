@@ -24,14 +24,24 @@ function App() {
 
       {!loading && !error && fungi.length > 0 && (
         <ul>
-          {fungi.map((f) => (
-            <li key={f.id} style={{ marginBottom: "1rem" }}>
-              <strong>{f.commonName || "Unnamed fungus"}</strong>
-              <br />
-              <em>{f.scientificName || "Scientific name not set"}</em>
-            </li>
-          ))}
-        </ul>
+  {fungi.map((f) => (
+    <li key={f.id} style={{ marginBottom: "1rem" }}>
+      <strong>{f.taxonomy?.commonName || "Unnamed fungus"}</strong>
+      <br />
+      <em>{f.taxonomy?.scientificName || "Scientific name not set"}</em>
+      {f.ecology?.images?.length > 0 && (
+        <div style={{ marginTop: "0.5rem" }}>
+          <img
+  src={f.ecology.images[0]?.replace(/,$/, "")} 
+  alt={f.taxonomy?.commonName || "fungus image"}
+  style={{ maxWidth: "200px", borderRadius: "8px" }}
+/>
+        </div>
+      )}
+    </li>
+  ))}
+</ul>
+
       )}
     </div>
   );
