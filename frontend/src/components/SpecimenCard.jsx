@@ -1,11 +1,21 @@
 function toImg(rawValue) {
     if (!rawValue) return "";
-    let s = String(rawValue).trim().replaceAll("\\", "/");
-    s = s.replace(/^\.?\//, "");            // quita ./ o /
-    s = s.replace(/^docs\/images\//, "images/"); // docs/images -> images
+
+    let s = String(rawValue).trim();
+    s = s.replace(/,$/, "");
+    if (s.startsWith("http://") || s.startsWith("https://")) {
+        return s;
+    }
+    s = s.replaceAll("\\", "/");
+
+    s = s.replace(/^\.?\//, "");
+    s = s.replace(/^docs\/images\//, "images/");
+
     if (!s.includes("/")) s = `images/${s}`;
-    return s.startsWith("/") ? s : `/${s}`;
+
+    return `/${s}`;
 }
+
 
 export default function SpecimenCard({ item }) {
     const common = item?.taxonomy?.commonName ?? "Unknown";
